@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Link from 'next/link';

@@ -1,26 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useLanguage } from '@/context/LanguageContext';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { useLanguage } from '../../../context/LanguageContext';
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
+import { articles } from '../../../data/articles';
 
 const PageContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
+  background-color: #f8f9fa;
 `;
 
 const HeroSection = styled.div`
   position: relative;
-  height: 400px;
+  height: 500px;
   width: 100%;
-  background: #2C3E50;
+  background: #1a1a1a;
   overflow: hidden;
 `;
 
@@ -30,12 +31,17 @@ const HeroImage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.4;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.4;
+  }
 `;
 
 const HeroContent = styled.div`
   position: relative;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 4rem 2rem;
   color: white;
@@ -47,13 +53,15 @@ const HeroContent = styled.div`
 `;
 
 const ArticleTitle = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 3.5rem;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 `;
 
@@ -64,6 +72,7 @@ const ArticleMeta = styled.div`
   gap: 2rem;
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
+  margin-top: 1rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -74,7 +83,11 @@ const ArticleMeta = styled.div`
 const MetaItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
 
   i {
     font-size: 1.2rem;
@@ -82,75 +95,80 @@ const MetaItem = styled.div`
 `;
 
 const MainContent = styled.div`
-  max-width: 800px;
-  margin: -100px auto 4rem;
-  padding: 3rem;
+  max-width: 900px;
+  margin: -100px auto 6rem;
+  padding: 3.5rem;
   background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
   position: relative;
   z-index: 2;
-`;
-
-const ArticleContent = styled.div`
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #2C3E50;
 
   h2 {
-    font-size: 2rem;
-    color: #2C3E50;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
     margin: 2.5rem 0 1.5rem;
-    font-weight: bold;
+    line-height: 1.3;
   }
 
   h3 {
-    font-size: 1.6rem;
-    color: #2C3E50;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
     margin: 2rem 0 1rem;
-    font-weight: bold;
+    line-height: 1.4;
   }
 
   p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
     margin-bottom: 1.5rem;
   }
 
-  ul, ol {
+  ul {
     margin: 1.5rem 0;
-    padding-left: 2rem;
+    padding-left: 1.2rem;
 
     li {
-      margin-bottom: 0.8rem;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 1rem;
       position: relative;
+      padding-left: 1.5rem;
 
       &::before {
         content: "•";
         color: #8B7355;
         font-weight: bold;
         position: absolute;
-        left: -1.2rem;
+        left: 0;
+        top: -2px;
+        font-size: 1.5rem;
       }
+    }
+  }
+
+  a {
+    color: #8B7355;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-bottom-color: #8B7355;
     }
   }
 
   blockquote {
     margin: 2rem 0;
     padding: 1.5rem 2rem;
-    border-left: 4px solid #8B7355;
+    border-left: 5px solid #8B7355;
     background: #f8f9fa;
     font-style: italic;
-    color: #495057;
-  }
-
-  a {
-    color: #8B7355;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s ease;
-
-    &:hover {
-      border-bottom-color: #8B7355;
-    }
+    color: #555;
   }
 `;
 
@@ -299,114 +317,28 @@ const slugMap: { [key: string]: { tr: string; en: string } } = {
   }
 };
 
-export default function ArticlePage() {
-  const { language, setLanguage } = useLanguage();
-  const params = useParams();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [article, setArticle] = useState<Article | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasAlternateVersion, setHasAlternateVersion] = useState(false);
+interface PageParams {
+  params: Promise<{
+    slug: string;
+  }>;
+}
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        const currentLang = searchParams.get('lang') || language;
-        const response = await fetch(`/api/articles/${params.slug}?lang=${currentLang}`);
-        if (!response.ok) {
-          throw new Error('Article not found');
-        }
-        const data = await response.json();
-        setArticle(data);
-
-        // Diğer dildeki versiyonun varlığını kontrol et
-        const currentSlug = params.slug as string;
-        setHasAlternateVersion(!!slugMap[currentSlug]);
-      } catch (error) {
-        console.error('Error fetching article:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchArticle();
-  }, [params.slug, language, searchParams]);
-
-  const handleLanguageChange = async (newLang: Language) => {
-    const currentSlug = params.slug as string;
-    
-    if (slugMap[currentSlug]) {
-      // Diğer dildeki slug'ı al
-      const newSlug = slugMap[currentSlug][newLang];
-      
-      try {
-        // Önce diğer dildeki makalenin varlığını kontrol et
-        const response = await fetch(`/api/articles/${newSlug}?lang=${newLang}`);
-        if (response.ok) {
-          // Dili değiştir
-          setLanguage(newLang);
-
-          // Yeni URL'ye yönlendir
-          const newUrl = `/makalelerimiz/${newSlug}?lang=${newLang}`;
-          window.location.href = newUrl;
-        } else {
-          console.error('Article not found in other language');
-        }
-      } catch (error) {
-        console.error('Error checking article in other language:', error);
-      }
-    }
-  };
-
-  const handleShare = (platform: string) => {
-    const url = window.location.href;
-    const title = article?.title;
-
-    switch (platform) {
-      case 'twitter':
-        window.open(`https://twitter.com/intent/tweet?text=${title}&url=${url}`);
-        break;
-      case 'facebook':
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
-        break;
-      case 'linkedin':
-        window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`);
-        break;
-      case 'whatsapp':
-        window.open(`https://wa.me/?text=${title} ${url}`);
-        break;
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <PageContainer>
-        <Header />
-        <LoadingContainer
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <i className="fas fa-circle-notch fa-spin" style={{ marginRight: '0.5rem' }} />
-          {language === 'tr' ? 'Yükleniyor...' : 'Loading...'}
-        </LoadingContainer>
-        <Footer />
-      </PageContainer>
-    );
-  }
+export default function ArticlePage({ params }: PageParams) {
+  const { language } = useLanguage();
+  const { slug } = use(params);
+  
+  const article = articles.find(a => 
+    (language === 'tr' && a.slug_tr === slug) || 
+    (language === 'en' && a.slug_en === slug)
+  );
 
   if (!article) {
     return (
       <PageContainer>
         <Header />
-        <ErrorContainer
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <i className="fas fa-exclamation-circle" style={{ marginRight: '0.5rem' }} />
-          {language === 'tr' ? 'Makale bulunamadı.' : 'Article not found.'}
-        </ErrorContainer>
+        <MainContent>
+          <div>{language === 'tr' ? 'Makale bulunamadı' : 'Article not found'}</div>
+        </MainContent>
         <Footer />
       </PageContainer>
     );
@@ -416,33 +348,17 @@ export default function ArticlePage() {
     <PageContainer>
       <Header />
       <HeroSection>
-        <LanguageSwitch>
-          <LanguageButton
-            $isActive={language === 'tr'}
-            onClick={() => handleLanguageChange('tr')}
-            disabled={language === 'tr' || !hasAlternateVersion}
-          >
-            TR
-          </LanguageButton>
-          <LanguageButton
-            $isActive={language === 'en'}
-            onClick={() => handleLanguageChange('en')}
-            disabled={language === 'en' || !hasAlternateVersion}
-          >
-            EN
-          </LanguageButton>
-        </LanguageSwitch>
         <HeroImage>
           <Image
             src={article.image}
-            alt={article.title}
+            alt={language === 'tr' ? article.title_tr : article.title_en}
             fill
             style={{ objectFit: 'cover' }}
           />
         </HeroImage>
         <HeroContent>
           <ArticleTitle>
-            {article.title}
+            {language === 'tr' ? article.title_tr : article.title_en}
           </ArticleTitle>
           <ArticleMeta>
             <MetaItem>
@@ -452,50 +368,14 @@ export default function ArticlePage() {
                 { year: 'numeric', month: 'long', day: 'numeric' }
               )}
             </MetaItem>
-            <MetaItem>
-              <i className="far fa-clock" />
-              {language === 'tr' ? '5 dakika okuma' : '5 minute read'}
-            </MetaItem>
           </ArticleMeta>
         </HeroContent>
       </HeroSection>
-
       <MainContent>
-        <ArticleContent>
-          <div dangerouslySetInnerHTML={{ 
-            __html: article.content
-          }} />
-        </ArticleContent>
-
-        <ShareSection>
-          <ShareTitle>
-            {language === 'tr' ? 'Bu Makaleyi Paylaş' : 'Share This Article'}
-          </ShareTitle>
-          <ShareButtons>
-            <ShareButton onClick={() => handleShare('twitter')} title="Twitter">
-              <i className="fab fa-twitter" />
-            </ShareButton>
-            <ShareButton onClick={() => handleShare('facebook')} title="Facebook">
-              <i className="fab fa-facebook-f" />
-            </ShareButton>
-            <ShareButton onClick={() => handleShare('linkedin')} title="LinkedIn">
-              <i className="fab fa-linkedin-in" />
-            </ShareButton>
-            <ShareButton onClick={() => handleShare('whatsapp')} title="WhatsApp">
-              <i className="fab fa-whatsapp" />
-            </ShareButton>
-          </ShareButtons>
-        </ShareSection>
+        <div dangerouslySetInnerHTML={{ 
+          __html: language === 'tr' ? article.content_tr : article.content_en 
+        }} />
       </MainContent>
-
-      <WhatsAppButton 
-        href="https://wa.me/905397440887"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="WhatsApp ile iletişime geçin"
-      >
-        <i className="fab fa-whatsapp"></i>
-      </WhatsAppButton>
       <Footer />
     </PageContainer>
   );

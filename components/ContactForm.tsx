@@ -122,7 +122,7 @@ export default function ContactForm() {
       } else {
         setError(language === 'tr' ? 'Bir hata oluştu. Lütfen tekrar deneyin.' : 'An error occurred. Please try again.');
       }
-    } catch (err) {
+    } catch (_) {
       setError(language === 'tr' ? 'Bir hata oluştu. Lütfen tekrar deneyin.' : 'An error occurred. Please try again.');
     }
   };

@@ -1,40 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
-import { marked } from 'marked';
+import { articles } from '../../../../data/articles';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
   try {
-    const slug = await params.slug;
     const { searchParams } = new URL(request.url);
     const lang = searchParams.get('lang') || 'tr';
     
-    const filePath = path.join(process.cwd(), '_posts', lang, `${slug}.md`);
-    const fileContent = await fs.readFile(filePath, 'utf8');
-    const { data, content } = matter(fileContent);
+    const article = articles.find(a => 
+      (lang === 'tr' && a.slug_tr === params.slug) || 
+      (lang === 'en' && a.slug_en === params.slug)
+    );
 
-    // Convert markdown content to HTML
-    const contentHtml = marked(content);
+    if (!article) {
+      return NextResponse.json(
+        { error: 'Article not found' },
+        { status: 404 }
+      );
+    }
 
-    const article = {
-      slug: slug,
-      title: data.title || '',
-      excerpt: data.excerpt || '',
-      date: data.date || new Date().toISOString(),
-      image: data.image || 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80',
-      content: contentHtml
-    };
-
-    return NextResponse.json(article);
+    return NextResponse.json({
+      slug: lang === 'tr' ? article.slug_tr : article.slug_en,
+      title: lang === 'tr' ? article.title_tr : article.title_en,
+      content: lang === 'tr' ? article.content_tr : article.content_en,
+      date: article.date,
+      image: article.image
+    });
   } catch (error) {
-    console.error('Error reading article:', error);
     return NextResponse.json(
-      { error: 'Article not found' },
-      { status: 404 }
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 } 

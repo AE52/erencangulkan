@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -1020,33 +1020,30 @@ const services: Service[] = [
   }
 ];
 
-export default function ServicePage() {
+interface PageParams {
+  params: {
+    slug: string;
+  };
+}
+
+export default function ServicePage({ params }: PageParams) {
   const { language } = useLanguage();
-  const params = useParams();
-  const router = useRouter();
-  const [service, setService] = useState<Service | null>(null);
+  const resolvedParams = use(params) as { slug: string };
+  const service = services.find(s => s.slug === resolvedParams.slug);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const currentService = services.find(s => s.slug === params.slug);
-    if (currentService) {
-      setService(currentService);
+    if (service) {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [params.slug]);
+  }, [service]);
 
   if (isLoading) {
     return (
       <PageContainer>
         <Header />
         <MainContent>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2>{language === 'tr' ? 'Yükleniyor...' : 'Loading...'}</h2>
-          </motion.div>
+          <div>{language === 'tr' ? 'Yükleniyor...' : 'Loading...'}</div>
         </MainContent>
         <Footer />
       </PageContainer>
@@ -1058,18 +1055,11 @@ export default function ServicePage() {
       <PageContainer>
         <Header />
         <MainContent>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2>{language === 'tr' ? 'Hizmet bulunamadı' : 'Service not found'}</h2>
-            <p>
-              {language === 'tr' 
-                ? 'Aradığınız hizmet sayfası bulunamadı.' 
-                : 'The service page you are looking for could not be found.'}
-            </p>
-          </motion.div>
+          <div>
+            {language === 'tr' 
+              ? 'Hizmet bulunamadı' 
+              : 'Service not found'}
+          </div>
         </MainContent>
         <Footer />
       </PageContainer>
@@ -1079,45 +1069,18 @@ export default function ServicePage() {
   return (
     <PageContainer>
       <Header />
-      
       <HeroSection $imageUrl={service.image}>
         <HeroContent>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <HeroTitle>
-              {language === 'tr' ? service.title_tr : service.title_en}
-            </HeroTitle>
-            <HeroSubtitle>
-              {language === 'tr' ? service.description_tr : service.description_en}
-            </HeroSubtitle>
-          </motion.div>
+          <HeroTitle>
+            {language === 'tr' ? service.title_tr : service.title_en}
+          </HeroTitle>
         </HeroContent>
       </HeroSection>
-
       <MainContent>
-        <ServiceContent
-          as={motion.div}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          dangerouslySetInnerHTML={{
-            __html: language === 'tr' ? service.content_tr : service.content_en
-          }}
-        />
+        <ServiceContent dangerouslySetInnerHTML={{ 
+          __html: language === 'tr' ? service.content_tr : service.content_en 
+        }} />
       </MainContent>
-
-      <WhatsAppButton 
-        href="https://wa.me/905397440887"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="WhatsApp ile iletişime geçin"
-      >
-        <i className="fab fa-whatsapp"></i>
-      </WhatsAppButton>
-
       <Footer />
     </PageContainer>
   );
