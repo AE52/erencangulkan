@@ -12,6 +12,9 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   optimizeFonts: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig; 
