@@ -3,7 +3,9 @@ import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest
+): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const lang = searchParams.get('lang') || 'tr';
