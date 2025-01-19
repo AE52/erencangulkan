@@ -1,110 +1,87 @@
 'use client';
 
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-const PageContainer = styled.div`
+const Container = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
-`;
-
-const NotFoundContainer = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-              url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80');
-  background-size: cover;
-  background-position: center;
 `;
 
 const Content = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
   text-align: center;
-  color: white;
-  max-width: 600px;
-  padding: 3rem;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
 `;
 
 const Title = styled.h1`
-  font-size: 8rem;
-  font-weight: bold;
-  margin: 0;
-  color: #8B7355;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #2C3E50;
 `;
 
-const Subtitle = styled.h2`
-  font-size: 2rem;
-  margin: 1rem 0;
-  color: white;
+const Message = styled.p`
+  font-size: 1.5rem;
+  color: #7F8C8D;
+  margin-bottom: 2rem;
 `;
 
-const Description = styled.p`
-  font-size: 1.2rem;
-  margin: 1.5rem 0;
-  color: rgba(255, 255, 255, 0.9);
-`;
-
-const BackButton = styled(Link)`
-  display: inline-block;
+const BackButton = styled.a`
   padding: 1rem 2rem;
-  background: #8B7355;
+  background-color: #8B7355;
   color: white;
   text-decoration: none;
-  border-radius: 30px;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 
   &:hover {
-    background: #6B5744;
-    transform: translateY(-2px);
+    background-color: #6B5835;
   }
 `;
 
-export default function NotFound() {
+function NotFoundContent() {
+  const searchParams = useSearchParams();
   const { language } = useLanguage();
 
   return (
-    <PageContainer>
-      <Header />
-      
-      <NotFoundContainer>
-        <Content
-          as={motion.div}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Title>404</Title>
-          <Subtitle>
-            {language === 'tr' 
-              ? 'Sayfa Bulunamadı'
-              : 'Page Not Found'}
-          </Subtitle>
-          <Description>
-            {language === 'tr'
-              ? 'Aradığınız sayfa mevcut değil veya taşınmış olabilir.'
-              : 'The page you are looking for does not exist or may have been moved.'}
-          </Description>
-          <BackButton href="/">
-            {language === 'tr' ? 'Anasayfaya Dön' : 'Back to Home'}
-          </BackButton>
-        </Content>
-      </NotFoundContainer>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Title>404</Title>
+      <Message>
+        {language === 'tr' 
+          ? 'Aradığınız sayfa bulunamadı.'
+          : 'The page you are looking for was not found.'}
+      </Message>
+      <BackButton href="/">
+        {language === 'tr' ? 'Ana Sayfaya Dön' : 'Back to Home'}
+      </BackButton>
+    </motion.div>
+  );
+}
 
+export default function NotFound() {
+  return (
+    <Container>
+      <Header />
+      <Content>
+        <Suspense fallback={<div>Loading...</div>}>
+          <NotFoundContent />
+        </Suspense>
+      </Content>
       <Footer />
-    </PageContainer>
+    </Container>
   );
 } 
