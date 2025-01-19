@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 
 export async function GET(
-  request: NextRequest
-): Promise<NextResponse> {
+  req: NextRequest
+): Promise<Response> {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(req.url);
     const lang = searchParams.get('lang') || 'tr';
     
     const postsDirectory = path.join(process.cwd(), '_posts', lang);
@@ -33,10 +33,10 @@ export async function GET(
     // Sort articles by date in descending order
     articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    return NextResponse.json(articles);
+    return Response.json(articles);
   } catch (error) {
     console.error('Error reading articles:', error);
-    return NextResponse.json(
+    return Response.json(
       { error: 'Failed to fetch articles' },
       { status: 500 }
     );
