@@ -1,18 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { articles } from '../../../../data/articles';
 
-interface RequestContext {
-  params: {
-    slug: string;
-  };
-}
-
 export async function GET(
-  req: NextRequest,
-  { params }: RequestContext
+  request: NextRequest,
+  { params }: { params: { slug: string } }
 ): Promise<Response> {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(request.url);
     const lang = searchParams.get('lang') || 'tr';
     
     const article = articles.find(a => 
