@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { articles } from '../../../../data/articles';
 
-interface RouteParams {
-  slug: string;
-}
-
 export async function GET(
   request: NextRequest,
-  { params }: { params: RouteParams }
+  { params }: { params: { slug: string } }
 ) {
   try {
     const { searchParams } = new URL(request.url);
