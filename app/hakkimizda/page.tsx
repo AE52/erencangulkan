@@ -6,15 +6,27 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const AboutContainer = styled.div`
-  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 0;
+  background-color: #fff;
+  min-height: calc(100vh - 80px);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin-top: 0;
+  }
 `;
 
 const AboutSection = styled.section`
-  padding: 5rem 0;
+  padding: 2rem 0;
   background: white;
 
   @media (max-width: 768px) {
-    padding: 3rem 0;
+    padding: 1rem 0;
   }
 `;
 
@@ -156,6 +168,9 @@ export default function AboutPage() {
                 height={500}
                 className="profile-image"
                 priority
+                quality={90}
+                loading="eager"
+                sizes="(max-width: 768px) 300px, 400px"
               />
             </ImageContainer>
             <TextContent>

@@ -311,6 +311,9 @@ export default function Header() {
               fill
               style={{ objectFit: 'contain' }}
               priority
+              sizes="(max-width: 768px) 260px, 340px"
+              quality={90}
+              loading="eager"
             />
           </Logo>
         </Link>
@@ -349,6 +352,12 @@ export default function Header() {
               <Link href="/makalelerimiz" onClick={() => setIsOpen(false)}>
                 <i className="fas fa-book-reader" />
                 {language === 'tr' ? 'Makalelerimiz' : 'Articles'}
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/hakkimizda" onClick={() => setIsOpen(false)}>
+                <i className="fas fa-user-tie" />
+                {language === 'tr' ? 'Hakkımızda' : 'About Us'}
               </Link>
             </NavItem>
             <NavItem>
