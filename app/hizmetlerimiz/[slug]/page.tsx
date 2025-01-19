@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useParams } from 'next/navigation';
@@ -1020,67 +1020,57 @@ const services: Service[] = [
   }
 ];
 
-interface PageParams {
-  params: {
-    slug: string;
-  };
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export default function ServicePage({ params }: PageParams) {
+export default async function ServicePage({ params }: PageProps) {
+  const { slug } = await params;
   const { language } = useLanguage();
-  const resolvedParams = use(params) as { slug: string };
-  const service = services.find(s => s.slug === resolvedParams.slug);
-  const [isLoading, setIsLoading] = useState(true);
+  const [service, setService] = useState<Service | null>(null);
 
   useEffect(() => {
-    if (service) {
-      setIsLoading(false);
-    }
-  }, [service]);
-
-  if (isLoading) {
-    return (
-      <PageContainer>
-        <Header />
-        <MainContent>
-          <div>{language === 'tr' ? 'Yükleniyor...' : 'Loading...'}</div>
-        </MainContent>
-        <Footer />
-      </PageContainer>
-    );
-  }
+    const foundService = services.find(s => s.slug === slug);
+    setService(foundService || null);
+  }, [slug]);
 
   if (!service) {
-    return (
-      <PageContainer>
-        <Header />
-        <MainContent>
-          <div>
-            {language === 'tr' 
-              ? 'Hizmet bulunamadı' 
-              : 'Service not found'}
-          </div>
-        </MainContent>
-        <Footer />
-      </PageContainer>
-    );
+    return <div>Loading...</div>;
   }
 
   return (
     <PageContainer>
       <Header />
-      <HeroSection $imageUrl={service.image}>
-        <HeroContent>
-          <HeroTitle>
-            {language === 'tr' ? service.title_tr : service.title_en}
-          </HeroTitle>
-        </HeroContent>
-      </HeroSection>
-      <MainContent>
-        <ServiceContent dangerouslySetInnerHTML={{ 
-          __html: language === 'tr' ? service.content_tr : service.content_en 
-        }} />
-      </MainContent>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <HeroSection $imageUrl={service.image}>
+          <HeroContent>
+            <HeroTitle>
+              {language === 'tr' ? service.title_tr : service.title_en}
+            </HeroTitle>
+            <HeroSubtitle>
+              {language === 'tr' ? service.description_tr : service.description_en}
+            </HeroSubtitle>
+          </HeroContent>
+        </HeroSection>
+        <MainContent>
+          <ServiceContent
+            dangerouslySetInnerHTML={{
+              __html: language === 'tr' ? service.content_tr : service.content_en
+            }}
+          />
+        </MainContent>
+      </motion.div>
+      <WhatsAppButton
+        href="https://wa.me/905301231234"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i className="fab fa-whatsapp"></i>
+      </WhatsAppButton>
       <Footer />
     </PageContainer>
   );
