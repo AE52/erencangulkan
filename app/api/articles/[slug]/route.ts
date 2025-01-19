@@ -1,21 +1,18 @@
 import { NextRequest } from 'next/server';
 import { articles } from '../../../../data/articles';
 
-type Context = {
-  params: { slug: string }
-}
-
 export async function GET(
   request: NextRequest,
-  context: Context
+  { params }: { params: Promise<{ slug: string }> }
 ): Promise<Response> {
   try {
+    const { slug } = await params;
     const { searchParams } = new URL(request.url);
     const lang = searchParams.get('lang') || 'tr';
     
     const article = articles.find(a => 
-      (lang === 'tr' && a.slug_tr === context.params.slug) || 
-      (lang === 'en' && a.slug_en === context.params.slug)
+      (lang === 'tr' && a.slug_tr === slug) || 
+      (lang === 'en' && a.slug_en === slug)
     );
 
     if (!article) {
