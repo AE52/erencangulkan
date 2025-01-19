@@ -1,7 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
@@ -49,37 +47,28 @@ const BackButton = styled.a`
   }
 `;
 
-function NotFoundContent() {
-  const searchParams = useSearchParams();
+export default function NotFound() {
   const { language } = useLanguage();
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Title>404</Title>
-      <Message>
-        {language === 'tr' 
-          ? 'Aradığınız sayfa bulunamadı.'
-          : 'The page you are looking for was not found.'}
-      </Message>
-      <BackButton href="/">
-        {language === 'tr' ? 'Ana Sayfaya Dön' : 'Back to Home'}
-      </BackButton>
-    </motion.div>
-  );
-}
-
-export default function NotFound() {
   return (
     <Container>
       <Header />
       <Content>
-        <Suspense fallback={<div>Loading...</div>}>
-          <NotFoundContent />
-        </Suspense>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Title>404</Title>
+          <Message>
+            {language === 'tr' 
+              ? 'Aradığınız sayfa bulunamadı.'
+              : 'The page you are looking for was not found.'}
+          </Message>
+          <BackButton href="/">
+            {language === 'tr' ? 'Ana Sayfaya Dön' : 'Back to Home'}
+          </BackButton>
+        </motion.div>
       </Content>
       <Footer />
     </Container>
