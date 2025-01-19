@@ -9,11 +9,9 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
   },
-  swcMinify: true,
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  optimizeFonts: true,
   eslint: {
     ignoreDuringBuilds: true,
   },

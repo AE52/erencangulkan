@@ -1,9 +1,13 @@
 import { NextRequest } from 'next/server';
 import { articles } from '../../../../data/articles';
 
+type Context = {
+  params: { slug: string }
+}
+
 export async function GET(
   request: NextRequest,
-  context: { params: { slug: string } }
+  context: Context
 ): Promise<Response> {
   try {
     const { searchParams } = new URL(request.url);
