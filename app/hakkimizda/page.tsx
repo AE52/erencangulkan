@@ -1,18 +1,16 @@
-import { Suspense } from 'react';
-import ClientAboutPage from './client';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { Metadata } from 'next';
+import AboutPageClient from './AboutPageClient';
 
-export default function AboutPage() {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <Suspense fallback={<div>Yükleniyor...</div>}>
-          <ClientAboutPage />
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: 'Hakkımızda | Av. Eren Can Gülkan',
+  description: 'İstanbul Barosu\'na kayıtlı avukat olarak, müvekkillerime en iyi hukuki hizmeti sunmak için çalışıyorum.',
+  openGraph: {
+    title: 'Hakkımızda | Av. Eren Can Gülkan',
+    description: 'İstanbul Barosu\'na kayıtlı avukat olarak, müvekkillerime en iyi hukuki hizmeti sunmak için çalışıyorum.',
+    images: ['/images/vesika.jpg']
+  }
+};
+
+export default function Page() {
+  return <AboutPageClient />;
 } 
