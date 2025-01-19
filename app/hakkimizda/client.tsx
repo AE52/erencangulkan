@@ -1,10 +1,10 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import SearchParamsWrapper from './search-params-wrapper';
 
 const Content = styled.div`
   padding: 2rem;
@@ -129,65 +129,66 @@ const WhatsAppButton = styled.a`
 `;
 
 export default function ClientAboutPage() {
-  const searchParams = useSearchParams();
   const { language } = useLanguage();
 
   return (
-    <Content>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <AboutSection>
-          <ImageContainer>
-            <Image
-              src="/images/vesika.jpg"
-              alt="Av. Erencan Gülkan"
-              width={400}
-              height={500}
-              className="profile-image"
-              priority
-              quality={90}
-              loading="eager"
-              sizes="(max-width: 768px) 300px, 400px"
-            />
-          </ImageContainer>
-          <TextContent>
-            <h1>{language === 'tr' ? 'Hakkımızda' : 'About Us'}</h1>
-            <h2>{language === 'tr' ? 'Hakkınızı Birlikte Kazanalım' : 'Let\'s Win Your Rights Together'}</h2>
-            <p>
-              {language === 'tr' 
-                ? 'Avukat Erencan Gülkan 1998 yılında İstanbulda doğmuştur. İlköğretim, ortaöğretim ve lise eğitimini İstanbulda tamamlamıştır. 2016 yılında Kocaeli Üniversitesi Hukuk Fakültesini kazanmış ve buradan başarıyla mezun olmuştur. 2022 yılında İstanbul Barosunda avukatlık stajına başlayıp ardından avukatlık ruhsatnamesine hak kazanarak serbest avukatlık faaliyetlerine başlamıştır. İleri seviye İngilizce ve orta seviye Almanca bilmektedir.'
-                : 'Attorney Erencan Gülkan was born in Istanbul in 1998. He completed his primary, secondary and high school education in Istanbul. He won Kocaeli University Faculty of Law in 2016 and graduated successfully. In 2022, he started his legal internship at the Istanbul Bar Association and then earned his attorney\'s license and started his independent legal practice. He has advanced English and intermediate German language skills.'}
-            </p>
-            <ProfileCard>
+    <SearchParamsWrapper>
+      <Content>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <AboutSection>
+            <ImageContainer>
               <Image
                 src="/images/vesika.jpg"
                 alt="Av. Erencan Gülkan"
-                width={60}
-                height={60}
-                className="profile-image-small"
+                width={400}
+                height={500}
+                className="profile-image"
+                priority
+                quality={90}
+                loading="eager"
+                sizes="(max-width: 768px) 300px, 400px"
               />
-              <div className="profile-info">
-                <h3>Av. Erencan Gülkan</h3>
-                <p>{language === 'tr' ? 'Kurucu Avukat' : 'Founding Attorney'}</p>
-              </div>
-            </ProfileCard>
-            <ContactButton onClick={() => window.location.href = '/iletisim'}>
-              {language === 'tr' ? 'İletişime Geçin' : 'Contact Us'}
-            </ContactButton>
-          </TextContent>
-        </AboutSection>
-        <WhatsAppButton 
-          href="https://wa.me/905397440887" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          aria-label={language === 'tr' ? 'WhatsApp ile iletişime geçin' : 'Contact via WhatsApp'}
-        >
-          <i className="fab fa-whatsapp"></i>
-        </WhatsAppButton>
-      </motion.div>
-    </Content>
+            </ImageContainer>
+            <TextContent>
+              <h1>{language === 'tr' ? 'Hakkımızda' : 'About Us'}</h1>
+              <h2>{language === 'tr' ? 'Hakkınızı Birlikte Kazanalım' : 'Let\'s Win Your Rights Together'}</h2>
+              <p>
+                {language === 'tr' 
+                  ? 'Avukat Erencan Gülkan 1998 yılında İstanbulda doğmuştur. İlköğretim, ortaöğretim ve lise eğitimini İstanbulda tamamlamıştır. 2016 yılında Kocaeli Üniversitesi Hukuk Fakültesini kazanmış ve buradan başarıyla mezun olmuştur. 2022 yılında İstanbul Barosunda avukatlık stajına başlayıp ardından avukatlık ruhsatnamesine hak kazanarak serbest avukatlık faaliyetlerine başlamıştır. İleri seviye İngilizce ve orta seviye Almanca bilmektedir.'
+                  : 'Attorney Erencan Gülkan was born in Istanbul in 1998. He completed his primary, secondary and high school education in Istanbul. He won Kocaeli University Faculty of Law in 2016 and graduated successfully. In 2022, he started his legal internship at the Istanbul Bar Association and then earned his attorney\'s license and started his independent legal practice. He has advanced English and intermediate German language skills.'}
+              </p>
+              <ProfileCard>
+                <Image
+                  src="/images/vesika.jpg"
+                  alt="Av. Erencan Gülkan"
+                  width={60}
+                  height={60}
+                  className="profile-image-small"
+                />
+                <div className="profile-info">
+                  <h3>Av. Erencan Gülkan</h3>
+                  <p>{language === 'tr' ? 'Kurucu Avukat' : 'Founding Attorney'}</p>
+                </div>
+              </ProfileCard>
+              <ContactButton onClick={() => window.location.href = '/iletisim'}>
+                {language === 'tr' ? 'İletişime Geçin' : 'Contact Us'}
+              </ContactButton>
+            </TextContent>
+          </AboutSection>
+          <WhatsAppButton 
+            href="https://wa.me/905397440887" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            aria-label={language === 'tr' ? 'WhatsApp ile iletişime geçin' : 'Contact via WhatsApp'}
+          >
+            <i className="fab fa-whatsapp"></i>
+          </WhatsAppButton>
+        </motion.div>
+      </Content>
+    </SearchParamsWrapper>
   );
 } 
