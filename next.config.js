@@ -18,6 +18,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['styled-components', 'framer-motion'],
     optimizeCss: true,
+    craCompat: false,
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev) {
