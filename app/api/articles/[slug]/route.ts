@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { articles } from '../../../../data/articles';
 
+type Props = {
+  params: {
+    slug: string
+  }
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: Props
 ) {
   try {
     const { searchParams } = new URL(request.url);
