@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { Suspense } from 'react';
 import HomePageClient from './HomePageClient';
 
 export const metadata: Metadata = {
@@ -14,25 +13,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={
-      <div style={{ 
-        height: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        backgroundColor: '#ffffff'
-      }}>
-        <div style={{
-          width: '50px',
-          height: '50px',
-          border: '3px solid #f3f3f3',
-          borderTop: '3px solid #8B7355',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }} />
-      </div>
-    }>
+    <div style={{ background: '#ffffff', minHeight: '100vh' }}>
       <HomePageClient />
-    </Suspense>
+    </div>
   );
 } 

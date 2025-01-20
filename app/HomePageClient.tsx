@@ -306,46 +306,45 @@ function HomePageContent() {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
 
     const loadImage = () => {
       setIsLoading(true);
       const imageUrl = slides[currentSlide].imageUrl;
       
-      if (typeof window !== 'undefined') {
-        const img = new window.Image();
-        img.src = imageUrl;
-        
-        img.onload = () => {
-          if (isMounted) {
-            setIsLoading(false);
-          }
-        };
-        
-        img.onerror = () => {
-          if (isMounted) {
-            setIsLoading(false);
-          }
-        };
-      }
+      const img = new Image();
+      img.src = imageUrl;
+      
+      img.onload = () => {
+        setIsLoading(false);
+      };
+      
+      img.onerror = () => {
+        setIsLoading(false);
+      };
     };
 
     loadImage();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [currentSlide]);
+  }, [currentSlide, mounted]);
 
   useEffect(() => {
+    if (!mounted) return;
+
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [mounted]);
+
+  if (!mounted) return null;
 
   const latestArticles = [...articles]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -484,7 +483,5 @@ function HomePageContent() {
 }
 
 export default function HomePageClient() {
-  return (
-    <HomePageContent />
-  );
+  return <HomePageContent />;
 } 
