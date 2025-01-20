@@ -70,23 +70,86 @@ const NavLink = styled.a`
 
 const LanguageButton = styled.button`
   background: none;
-  border: 2px solid #2C3E50;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  color: #2C3E50;
-  font-weight: 500;
+  border: none;
+  padding: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #2C3E50;
+
+  svg {
+    width: 24px;
+    height: 16px;
+  }
 
   &:hover {
-    background-color: #2C3E50;
-    color: white;
+    opacity: 0.8;
   }
 `;
 
+const TurkishFlag = () => (
+  <svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
+    <rect width="30" height="20" fill="#E30A17"/>
+    <circle cx="13" cy="10" r="6" fill="#ffffff"/>
+    <circle cx="14.5" cy="10" r="5" fill="#E30A17"/>
+    <g transform="translate(15.5 10) scale(0.8)">
+      <path
+        d="M0,-5 L1.5,-1.5 L5.5,-1.5 L2,0.6 L3.3,4.5 L0,2 L-3.3,4.5 L-2,0.6 L-5.5,-1.5 L-1.5,-1.5 Z"
+        fill="#ffffff"
+      />
+    </g>
+  </svg>
+);
+
+const BritishFlag = () => (
+  <svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
+    <rect width="30" height="20" fill="#012169"/>
+    <path d="M0 0 L30 20 M30 0 L0 20" stroke="#ffffff" strokeWidth="4"/>
+    <path d="M15 0 L15 20 M0 10 L30 10" stroke="#ffffff" strokeWidth="4"/>
+    <path d="M15 0 L15 20 M0 10 L30 10" stroke="#C8102E" strokeWidth="2"/>
+    <path d="M0 0 L30 20 M30 0 L0 20" stroke="#C8102E" strokeWidth="2"/>
+  </svg>
+);
+
+const MobileMenu = styled.div<{ isOpen: boolean }>`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    padding: 1rem;
+    z-index: 999;
+  }
+`;
+
+const MobileMenuHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
+
+const MobileMenuLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
 function HeaderContent() {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLanguageToggle = () => {
+    setLanguage(language === 'tr' ? 'en' : 'tr');
+  };
 
   return (
     <HeaderContainer>
@@ -122,8 +185,18 @@ function HeaderContent() {
         <Link href="/iletisim" passHref legacyBehavior>
           <NavLink>{language === 'tr' ? 'İletişim' : 'Contact'}</NavLink>
         </Link>
-        <LanguageButton onClick={toggleLanguage}>
-          {language === 'tr' ? 'EN' : 'TR'}
+        <LanguageButton onClick={handleLanguageToggle}>
+          {language === 'tr' ? (
+            <>
+              <BritishFlag />
+              EN
+            </>
+          ) : (
+            <>
+              <TurkishFlag />
+              TR
+            </>
+          )}
         </LanguageButton>
       </NavLinks>
     </HeaderContainer>
