@@ -6,7 +6,7 @@ const nextConfig = {
   },
   images: {
     domains: ['images.unsplash.com'],
-    unoptimized: true,
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: 'https',
@@ -25,6 +25,7 @@ const nextConfig = {
     optimizeCss: true,
     craCompat: false,
     appDir: true,
+    serverActions: true,
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev) {
@@ -40,6 +41,13 @@ const nextConfig = {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendors',
               chunks: 'all',
+              priority: 10,
+              reuseExistingChunk: true,
+            },
+            common: {
+              minChunks: 2,
+              priority: -10,
+              reuseExistingChunk: true,
             },
           },
         },
@@ -55,6 +63,18 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
           },
         ],
       },

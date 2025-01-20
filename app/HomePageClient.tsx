@@ -305,7 +305,6 @@ const slides = [
 function HomePageContent() {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -325,12 +324,12 @@ function HomePageContent() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
       >
         <HeroSection>
           <SlideBackground
             $imageUrl={slides[currentSlide].imageUrl}
-            $isLoading={isLoading}
+            $isLoading={false}
           />
           <HeroContent>
             <motion.div

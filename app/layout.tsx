@@ -12,6 +12,8 @@ const inter = Inter({
   display: 'swap',
   preload: true,
   fallback: ['system-ui', 'arial'],
+  adjustFontFallback: true,
+  weight: ['400', '500', '600', '700'],
 })
 
 const WhatsAppButton = styled.a`
@@ -54,6 +56,8 @@ export default function RootLayout({
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
         />
         <link
           rel="preconnect"
@@ -82,7 +86,8 @@ export default function RootLayout({
         </StyledComponentsRegistry>
         <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
         />
       </body>
     </html>
