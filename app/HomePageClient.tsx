@@ -305,48 +305,15 @@ const slides = [
 function HomePageContent() {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-
-    const loadImage = () => {
-      setIsLoading(true);
-      const imageUrl = slides[currentSlide].imageUrl;
-      
-      if (typeof window !== 'undefined') {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        
-        img.onload = () => {
-          setIsLoading(false);
-        };
-        
-        img.onerror = () => {
-          setIsLoading(false);
-        };
-      }
-    };
-
-    loadImage();
-  }, [currentSlide, mounted]);
-
-  useEffect(() => {
-    if (!mounted) return;
-
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [mounted]);
-
-  if (!mounted) return null;
+  }, []);
 
   const latestArticles = [...articles]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -361,7 +328,6 @@ function HomePageContent() {
         transition={{ duration: 0.5 }}
       >
         <HeroSection>
-          {isLoading && <LoadingSpinner />}
           <SlideBackground
             $imageUrl={slides[currentSlide].imageUrl}
             $isLoading={isLoading}
