@@ -12,35 +12,30 @@ const PageContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
+  background-color: white;
 `;
 
-const HeroSection = styled.section`
+const HeroSection = styled.div`
   position: relative;
-  height: 400px;
+  height: 60vh;
   width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-              url('/images/about-hero.jpg');
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(120deg, #8B7355, #D4AF37);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   text-align: center;
-`;
 
-const HeroContent = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  @media (max-width: 768px) {
+    height: 50vh;
+  }
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: white;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
@@ -48,48 +43,100 @@ const HeroTitle = styled.h1`
 `;
 
 const MainContent = styled.div`
-  max-width: 1200px;
-  margin: 4rem auto;
-  padding: 0 2rem;
+  max-width: 1000px;
+  margin: -100px auto 4rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: 768px) {
+    margin: -50px 1rem 2rem;
+    padding: 2rem;
+  }
 `;
 
-const AboutSection = styled.section`
+const AboutGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  margin-bottom: 4rem;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: start;
 
-  @media (max-width: 992px) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 `;
 
-const AboutImage = styled.div`
+const ImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 500px;
-  border-radius: 15px;
+  height: 400px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
-  @media (max-width: 992px) {
-    height: 400px;
+  @media (max-width: 768px) {
+    height: 300px;
   }
 `;
 
-const AboutContentWrapper = styled.div`
+const AboutContent = styled.div`
+  color: #2C3E50;
+  
   h2 {
-    font-size: 2.5rem;
-    color: #2C3E50;
+    font-size: 2rem;
+    color: #8B7355;
     margin-bottom: 1.5rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
   }
 
   p {
-    font-size: 1.1rem;
-    color: #666;
+    font-size: 1.2rem;
     line-height: 1.8;
     margin-bottom: 1.5rem;
+    color: #4A5568;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+`;
+
+const LanguageSkills = styled.div`
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #E2E8F0;
+`;
+
+const SkillTitle = styled.h3`
+  font-size: 1.5rem;
+  color: #8B7355;
+  margin-bottom: 1rem;
+`;
+
+const SkillList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const SkillItem = styled.li`
+  font-size: 1.1rem;
+  color: #4A5568;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+
+  &:before {
+    content: "•";
+    color: #8B7355;
+    font-weight: bold;
+    margin-right: 0.5rem;
   }
 `;
 
@@ -108,11 +155,19 @@ const WhatsAppButton = styled.a`
   font-size: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 9999;
 
   &:hover {
     transform: scale(1.1);
     background-color: #20ba57;
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
   }
 `;
 
@@ -128,46 +183,67 @@ function AboutPageContent() {
         transition={{ duration: 0.5 }}
       >
         <HeroSection>
-          <HeroContent>
-            <HeroTitle>
-              {language === 'tr' ? 'Hakkımızda' : 'About Us'}
-            </HeroTitle>
-          </HeroContent>
+          <HeroTitle>
+            {language === 'tr' ? 'Hakkınızı Birlikte Kazanalım' : 'Let\'s Win Your Rights Together'}
+          </HeroTitle>
         </HeroSection>
-
         <MainContent>
-          <AboutSection>
-            <AboutImage>
+          <AboutGrid>
+            <ImageContainer>
               <Image
                 src="/images/vesika.jpg"
-                alt="Av. Erencan Gülkan"
+                alt="Av. Eren Can Gülkan"
                 fill
                 style={{ objectFit: 'cover' }}
               />
-            </AboutImage>
-            <AboutContentWrapper>
-              <h2>Av. Erencan Gülkan</h2>
-              <p>
-                {language === 'tr'
-                  ? 'Merhaba, ben Avukat Erencan Gülkan. İstanbul Barosu\'na kayıtlı olarak hukuki danışmanlık ve avukatlık hizmetleri vermekteyim.'
-                  : 'Hello, I am Attorney Erencan Gülkan. I provide legal consultancy and attorney services registered to the Istanbul Bar Association.'}
-              </p>
-              <p>
-                {language === 'tr'
-                  ? 'Müvekkillerimin haklarını korumak ve en iyi sonucu elde etmek için titizlikle çalışıyorum. Her davanın kendine özgü olduğuna inanıyor ve her müvekkilime özel çözümler sunuyorum.'
-                  : 'I work diligently to protect my clients\' rights and achieve the best results. I believe that each case is unique and I offer special solutions to each of my clients.'}
-              </p>
-              <p>
-                {language === 'tr'
-                  ? 'Hukuki süreçlerde şeffaflık ve güven ilkelerini esas alıyor, müvekkillerimi sürecin her aşamasında bilgilendiriyorum.'
-                  : 'I base transparency and trust principles in legal processes and inform my clients at every stage of the process.'}
-              </p>
-            </AboutContentWrapper>
-          </AboutSection>
+            </ImageContainer>
+            <AboutContent>
+              <h2>{language === 'tr' ? 'Av. Eren Can Gülkan' : 'Attorney Eren Can Gülkan'}</h2>
+              {language === 'tr' ? (
+                <>
+                  <p>
+                    Avukat Eren Can Gülkan 1998 yılında İstanbul'da doğmuştur. İlköğretim, ortaöğretim ve lise eğitimini İstanbul'da tamamlamıştır.
+                  </p>
+                  <p>
+                    2016 yılında Kocaeli Üniversitesi Hukuk Fakültesini kazanmış ve buradan başarıyla mezun olmuştur.
+                  </p>
+                  <p>
+                    2022 yılında İstanbul Barosunda avukatlık stajına başlayıp ardından avukatlık ruhsatnamesine hak kazanarak serbest avukatlık faaliyetlerine başlamıştır.
+                  </p>
+                  <LanguageSkills>
+                    <SkillTitle>Yabancı Dil Bilgisi</SkillTitle>
+                    <SkillList>
+                      <SkillItem>İngilizce - İleri Seviye</SkillItem>
+                      <SkillItem>Almanca - Orta Seviye</SkillItem>
+                    </SkillList>
+                  </LanguageSkills>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Attorney Eren Can Gülkan was born in Istanbul in 1998. He completed his primary, secondary, and high school education in Istanbul.
+                  </p>
+                  <p>
+                    In 2016, he was admitted to Kocaeli University Faculty of Law and graduated successfully.
+                  </p>
+                  <p>
+                    In 2022, he started his legal internship at the Istanbul Bar Association and after obtaining his attorney license, he began his independent legal practice.
+                  </p>
+                  <LanguageSkills>
+                    <SkillTitle>Language Skills</SkillTitle>
+                    <SkillList>
+                      <SkillItem>English - Advanced Level</SkillItem>
+                      <SkillItem>German - Intermediate Level</SkillItem>
+                    </SkillList>
+                  </LanguageSkills>
+                </>
+              )}
+            </AboutContent>
+          </AboutGrid>
         </MainContent>
       </motion.div>
 
-      <WhatsAppButton 
+      <WhatsAppButton
         href="https://wa.me/905397440887"
         target="_blank"
         rel="noopener noreferrer"
@@ -175,6 +251,7 @@ function AboutPageContent() {
       >
         <i className="fab fa-whatsapp"></i>
       </WhatsAppButton>
+
       <Footer />
     </PageContainer>
   );

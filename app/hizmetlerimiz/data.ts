@@ -601,63 +601,63 @@ export const services: Service[] = [
     title_tr: 'İdare Hukuku',
     title_en: 'Administrative Law',
     icon: 'landmark',
-    description_tr: 'İdari davalarda ve uyuşmazlıklarda hukuki danışmanlık.',
-    description_en: 'Legal consultancy in administrative cases and disputes.',
+    description_tr: 'İdari işlem ve kararlara karşı hukuki destek ve danışmanlık.',
+    description_en: 'Legal support and consultancy against administrative acts and decisions.',
     image: 'https://images.unsplash.com/photo-1436450412740-6b988f486c6b?q=80',
     content_tr: `
       <h2>İdare Hukuku Hizmetlerimiz</h2>
-      <p>İdare Hukuku alanında uzman ekibimizle, idari işlem ve uyuşmazlıklarda profesyonel hukuki danışmanlık hizmeti sunuyoruz. Her türlü idari hukuk sorununda yanınızdayız.</p>
+      <p>İdare Hukuku alanında uzman ekibimizle, idari işlem ve kararlara karşı hukuki destek ve danışmanlık hizmeti sunuyoruz. Kamu kurumları ile olan uyuşmazlıklarınızda yanınızdayız.</p>
       
       <h3>Hizmet Alanlarımız</h3>
       <ul>
-        <li>İdari davalar ve iptal davaları</li>
+        <li>İdari işlemlerin iptali davaları</li>
         <li>Tam yargı davaları</li>
-        <li>Kamu ihale uyuşmazlıkları</li>
-        <li>İmar hukuku uyuşmazlıkları</li>
-        <li>Memur hukuku ve disiplin soruşturmaları</li>
         <li>Kamulaştırma davaları</li>
-        <li>Ruhsat ve izin işlemleri</li>
+        <li>İmar hukuku uyuşmazlıkları</li>
+        <li>Kamu ihale uyuşmazlıkları</li>
+        <li>Memur hukuku ve disiplin soruşturmaları</li>
+        <li>Vergi hukuku uyuşmazlıkları</li>
         <li>İdari para cezalarına itiraz</li>
       </ul>
 
       <h3>Neden Biz?</h3>
-      <p>İdare Hukuku alanındaki deneyimimiz ve uzman kadromuzla, müvekkillerimizin haklarını en etkin şekilde koruyoruz. Her vakayı titizlikle inceliyor ve en uygun çözüm stratejisini geliştiriyoruz.</p>
+      <p>İdare Hukuku alanındaki deneyimimiz ve uzman kadromuzla, müvekkillerimizin haklarını en etkin şekilde savunuyoruz. Her dosyayı titizlikle inceliyor ve en uygun stratejiyi geliştiriyoruz.</p>
 
-      <h3>Çalışma Metodumuz</h3>
+      <h3>Çalışma Yaklaşımımız</h3>
       <ul>
         <li>Kapsamlı hukuki analiz</li>
-        <li>Proaktif danışmanlık hizmeti</li>
-        <li>Süreç yönetiminde şeffaflık</li>
-        <li>Düzenli bilgilendirme ve raporlama</li>
-        <li>Güncel içtihat takibi</li>
+        <li>Etkin süreç yönetimi</li>
+        <li>Düzenli bilgilendirme</li>
+        <li>Alternatif çözüm yollarının değerlendirilmesi</li>
+        <li>Uzman kadro ile destek</li>
       </ul>
     `,
     content_en: `
       <h2>Our Administrative Law Services</h2>
-      <p>With our expert team in Administrative Law, we provide professional legal consultancy services in administrative procedures and disputes. We are with you in all kinds of administrative law issues.</p>
+      <p>With our expert team in Administrative Law, we provide legal support and consultancy against administrative acts and decisions. We are with you in your disputes with public institutions.</p>
       
       <h3>Service Areas</h3>
       <ul>
-        <li>Administrative cases and annulment actions</li>
+        <li>Annulment of administrative acts</li>
         <li>Full remedy actions</li>
-        <li>Public procurement disputes</li>
-        <li>Zoning law disputes</li>
-        <li>Civil servant law and disciplinary investigations</li>
         <li>Expropriation cases</li>
-        <li>License and permit procedures</li>
-        <li>Administrative fine objections</li>
+        <li>Zoning law disputes</li>
+        <li>Public procurement disputes</li>
+        <li>Civil servant law and disciplinary investigations</li>
+        <li>Tax law disputes</li>
+        <li>Appeals against administrative fines</li>
       </ul>
 
       <h3>Why Choose Us?</h3>
-      <p>With our experience and expert staff in Administrative Law, we protect our clients' rights most effectively. We carefully examine each case and develop the most appropriate solution strategy.</p>
+      <p>With our experience and expert staff in Administrative Law, we defend our clients' rights most effectively. We carefully examine each file and develop the most appropriate strategy.</p>
 
-      <h3>Our Working Method</h3>
+      <h3>Our Working Approach</h3>
       <ul>
         <li>Comprehensive legal analysis</li>
-        <li>Proactive consultancy service</li>
-        <li>Transparency in process management</li>
-        <li>Regular updates and reporting</li>
-        <li>Current jurisprudence tracking</li>
+        <li>Effective process management</li>
+        <li>Regular updates</li>
+        <li>Evaluation of alternative solutions</li>
+        <li>Support with expert staff</li>
       </ul>
     `
   },
@@ -665,64 +665,64 @@ export const services: Service[] = [
     slug: 'bilisim-hukuku',
     title_tr: 'Bilişim Hukuku',
     title_en: 'IT Law',
-    icon: 'laptop-code',
+    icon: 'laptop',
     description_tr: 'Dijital dünyada hukuki haklarınızın korunması için uzman destek.',
     description_en: 'Expert support for protecting your legal rights in the digital world.',
     image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80',
     content_tr: `
       <h2>Bilişim Hukuku Hizmetlerimiz</h2>
-      <p>Bilişim Hukuku alanında uzman ekibimizle, dijital dünyada hukuki haklarınızın korunması için profesyonel destek sağlıyoruz. Her türlü bilişim hukuku sorununda yanınızdayız.</p>
+      <p>Bilişim Hukuku alanında uzman ekibimizle, dijital dünyada karşılaşabileceğiniz her türlü hukuki sorunda yanınızdayız. Teknoloji ve internet alanındaki haklarınızı koruyoruz.</p>
       
       <h3>Hizmet Alanlarımız</h3>
       <ul>
-        <li>Kişisel verilerin korunması (KVKK)</li>
-        <li>E-ticaret hukuku</li>
-        <li>Siber güvenlik hukuku</li>
-        <li>Domain ve marka uyuşmazlıkları</li>
+        <li>Kişisel verilerin korunması (KVKK) danışmanlığı</li>
+        <li>Siber suçlar ve bilişim suçları</li>
+        <li>E-ticaret hukuku danışmanlığı</li>
         <li>Sosyal medya hukuku</li>
-        <li>Yazılım lisans sözleşmeleri</li>
-        <li>Dijital fikri mülkiyet hakları</li>
-        <li>Blockchain ve kripto para hukuku</li>
+        <li>Domain ve marka uyuşmazlıkları</li>
+        <li>Yazılım ve lisans sözleşmeleri</li>
+        <li>İnternet sitesi yasal metinleri hazırlama</li>
+        <li>Dijital haklar ve telif hukuku</li>
       </ul>
 
       <h3>Neden Biz?</h3>
-      <p>Bilişim Hukuku alanındaki deneyimimiz ve teknoloji odaklı yaklaşımımızla, müvekkillerimizin dijital dünyadaki haklarını en etkin şekilde koruyoruz. Her vakayı titizlikle inceliyor ve en uygun çözüm stratejisini geliştiriyoruz.</p>
+      <p>Bilişim Hukuku alanındaki güncel bilgi ve deneyimimizle, dijital dünyadaki haklarınızı en iyi şekilde koruyoruz. Teknolojik gelişmeleri yakından takip ediyor ve hukuki çözümler sunuyoruz.</p>
 
       <h3>Çalışma Prensibimiz</h3>
       <ul>
-        <li>Güncel teknoloji trendleri takibi</li>
-        <li>Proaktif risk yönetimi</li>
-        <li>Uyum süreçlerinde danışmanlık</li>
-        <li>Süreç yönetiminde şeffaflık</li>
-        <li>Düzenli bilgilendirme ve raporlama</li>
+        <li>Güncel teknoloji ve hukuk bilgisi</li>
+        <li>Proaktif yaklaşım</li>
+        <li>Hızlı çözüm üretme</li>
+        <li>Sürekli iletişim</li>
+        <li>Önleyici hukuki danışmanlık</li>
       </ul>
     `,
     content_en: `
       <h2>Our IT Law Services</h2>
-      <p>With our expert team in IT Law, we provide professional support for protecting your legal rights in the digital world. We are with you in all kinds of IT law issues.</p>
+      <p>With our expert team in IT Law, we are with you in any legal issues you may encounter in the digital world. We protect your rights in technology and internet areas.</p>
       
       <h3>Service Areas</h3>
       <ul>
-        <li>Personal data protection (GDPR)</li>
-        <li>E-commerce law</li>
-        <li>Cybersecurity law</li>
-        <li>Domain and trademark disputes</li>
+        <li>Personal data protection consultancy</li>
+        <li>Cybercrime and IT crimes</li>
+        <li>E-commerce law consultancy</li>
         <li>Social media law</li>
-        <li>Software license agreements</li>
-        <li>Digital intellectual property rights</li>
-        <li>Blockchain and cryptocurrency law</li>
+        <li>Domain and trademark disputes</li>
+        <li>Software and license agreements</li>
+        <li>Website legal text preparation</li>
+        <li>Digital rights and copyright law</li>
       </ul>
 
       <h3>Why Choose Us?</h3>
-      <p>With our experience in IT Law and technology-focused approach, we protect our clients' rights in the digital world most effectively. We carefully examine each case and develop the most appropriate solution strategy.</p>
+      <p>With our current knowledge and experience in IT Law, we protect your rights in the digital world in the best way. We closely follow technological developments and provide legal solutions.</p>
 
       <h3>Our Working Principle</h3>
       <ul>
-        <li>Current technology trends tracking</li>
-        <li>Proactive risk management</li>
-        <li>Compliance process consultancy</li>
-        <li>Transparency in process management</li>
-        <li>Regular updates and reporting</li>
+        <li>Up-to-date technology and legal knowledge</li>
+        <li>Proactive approach</li>
+        <li>Quick solution generation</li>
+        <li>Continuous communication</li>
+        <li>Preventive legal consultancy</li>
       </ul>
     `
   },
@@ -730,64 +730,100 @@ export const services: Service[] = [
     slug: 'yabancilar-hukuku',
     title_tr: 'Yabancılar Hukuku',
     title_en: 'Immigration Law',
-    icon: 'globe',
-    description_tr: 'Oturma izni, vatandaşlık ve yabancılar hukuku danışmanlığı.',
-    description_en: 'Residence permit, citizenship and foreigners law consultancy.',
-    image: 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80',
+    icon: 'passport',
+    description_tr: 'Oturma izni, vatandaşlık ve yabancılar hukuku alanında profesyonel destek.',
+    description_en: 'Professional support in residence permits, citizenship and foreigners rights.',
+    image: 'https://images.unsplash.com/photo-1434123700504-d8cfba6a12c0?q=80',
     content_tr: `
       <h2>Yabancılar Hukuku Hizmetlerimiz</h2>
-      <p>Yabancılar Hukuku alanında uzman ekibimizle, Türkiye'de yaşayan veya yaşamayı planlayan yabancılar için kapsamlı hukuki danışmanlık hizmeti sunuyoruz. Oturma izni, çalışma izni ve vatandaşlık başvurularında profesyonel destek sağlıyoruz.</p>
+      <p>Yabancılar Hukuku alanında uzman ekibimizle, Türkiye'de yaşayan veya yaşamayı planlayan yabancılar için kapsamlı hukuki destek sağlıyoruz. Oturma izni, çalışma izni ve vatandaşlık başvurularında yanınızdayız.</p>
       
       <h3>Hizmet Alanlarımız</h3>
       <ul>
-        <li>Kısa ve uzun dönem ikamet izni başvuruları</li>
+        <li>Oturma izni başvuruları ve danışmanlık</li>
         <li>Çalışma izni başvuruları</li>
         <li>Türk vatandaşlığı başvuruları</li>
-        <li>Yatırımcı vizesi danışmanlığı</li>
-        <li>Öğrenci vizesi ve ikamet izni</li>
-        <li>Aile birleşimi süreçleri</li>
-        <li>Sınır dışı işlemlerine itiraz</li>
+        <li>Yatırımcı ve girişimci vizeleri</li>
+        <li>Öğrenci vizeleri ve izinleri</li>
+        <li>Sınır dışı işlemlerine karşı hukuki destek</li>
+        <li>Uluslararası koruma başvuruları</li>
         <li>Vize ret kararlarına itiraz</li>
       </ul>
 
+      <h3>Vatandaşlık Başvuru Süreçleri</h3>
+      <ul>
+        <li>İstisnai vatandaşlık başvuruları</li>
+        <li>Yatırım yoluyla vatandaşlık</li>
+        <li>Evlilik yoluyla vatandaşlık</li>
+        <li>Genel vatandaşlığa geçiş</li>
+        <li>Çifte vatandaşlık işlemleri</li>
+      </ul>
+
+      <h3>Oturma İzni Türleri</h3>
+      <ul>
+        <li>Kısa dönem oturma izni</li>
+        <li>Uzun dönem oturma izni</li>
+        <li>Aile ikamet izni</li>
+        <li>Öğrenci ikamet izni</li>
+        <li>Yatırımcı ikamet izni</li>
+      </ul>
+
       <h3>Neden Biz?</h3>
-      <p>Yabancılar Hukuku alanındaki deneyimimiz ve çok dilli hizmet anlayışımızla, müvekkillerimize en etkin çözümleri sunuyoruz. Her vakayı titizlikle inceliyor ve en uygun hukuki stratejiyi geliştiriyoruz.</p>
+      <p>Yabancılar Hukuku alanındaki deneyimimiz ve çok dilli ekibimizle, yabancı müvekkillerimize en iyi hizmeti sunuyoruz. Başvuru süreçlerini profesyonelce yönetiyor ve olumlu sonuç için çalışıyoruz.</p>
 
       <h3>Çalışma Prensibimiz</h3>
       <ul>
-        <li>Çok dilli iletişim desteği</li>
-        <li>Kişiye özel danışmanlık hizmeti</li>
-        <li>Süreç yönetiminde şeffaflık</li>
-        <li>Güncel mevzuat takibi</li>
-        <li>Hızlı ve etkin çözüm odaklı yaklaşım</li>
+        <li>Çok dilli hizmet</li>
+        <li>Hızlı ve etkin süreç yönetimi</li>
+        <li>Düzenli bilgilendirme</li>
+        <li>Kişiye özel çözümler</li>
+        <li>7/24 destek</li>
       </ul>
     `,
     content_en: `
       <h2>Our Immigration Law Services</h2>
-      <p>With our expert team in Immigration Law, we provide comprehensive legal consultancy services for foreigners living or planning to live in Turkey. We provide professional support in residence permit, work permit and citizenship applications.</p>
+      <p>With our expert team in Immigration Law, we provide comprehensive legal support for foreigners living or planning to live in Turkey. We are with you in residence permit, work permit, and citizenship applications.</p>
       
       <h3>Service Areas</h3>
       <ul>
-        <li>Short and long-term residence permit applications</li>
+        <li>Residence permit applications and consultancy</li>
         <li>Work permit applications</li>
         <li>Turkish citizenship applications</li>
-        <li>Investor visa consultancy</li>
-        <li>Student visa and residence permit</li>
-        <li>Family reunification processes</li>
-        <li>Deportation appeals</li>
-        <li>Visa rejection appeals</li>
+        <li>Investor and entrepreneur visas</li>
+        <li>Student visas and permits</li>
+        <li>Legal support against deportation procedures</li>
+        <li>International protection applications</li>
+        <li>Appeals against visa rejections</li>
+      </ul>
+
+      <h3>Citizenship Application Processes</h3>
+      <ul>
+        <li>Exceptional citizenship applications</li>
+        <li>Citizenship by investment</li>
+        <li>Citizenship through marriage</li>
+        <li>General naturalization</li>
+        <li>Dual citizenship procedures</li>
+      </ul>
+
+      <h3>Types of Residence Permits</h3>
+      <ul>
+        <li>Short-term residence permit</li>
+        <li>Long-term residence permit</li>
+        <li>Family residence permit</li>
+        <li>Student residence permit</li>
+        <li>Investor residence permit</li>
       </ul>
 
       <h3>Why Choose Us?</h3>
-      <p>With our experience in Immigration Law and multilingual service approach, we offer the most effective solutions to our clients. We carefully examine each case and develop the most appropriate legal strategy.</p>
+      <p>With our experience in Immigration Law and multilingual team, we provide the best service to our foreign clients. We professionally manage application processes and work for positive results.</p>
 
       <h3>Our Working Principle</h3>
       <ul>
-        <li>Multilingual communication support</li>
-        <li>Personalized consultancy service</li>
-        <li>Transparency in process management</li>
-        <li>Current legislation tracking</li>
-        <li>Fast and effective solution-oriented approach</li>
+        <li>Multilingual service</li>
+        <li>Fast and effective process management</li>
+        <li>Regular updates</li>
+        <li>Personalized solutions</li>
+        <li>24/7 support</li>
       </ul>
     `
   }

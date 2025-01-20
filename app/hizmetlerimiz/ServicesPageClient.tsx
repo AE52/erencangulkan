@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -13,58 +14,23 @@ const PageContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
+  background-color: white;
+  color: #2C3E50;
 `;
 
-const HeroSection = styled.div`
-  position: relative;
-  height: 400px;
-  width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-              url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
-`;
-
-const HeroContent = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-`;
-
-const HeroTitle = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-`;
-
-const HeroSubtitle = styled.p`
-  font-size: 1.5rem;
-  opacity: 0.9;
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
-`;
-
-const ServicesSection = styled.section`
+const MainContent = styled.main`
+  flex: 1;
   padding: 4rem 2rem;
-  background: white;
-`;
-
-const ServicesContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+`;
+
+const PageTitle = styled.h1`
+  font-size: 2.5rem;
+  color: #2C3E50;
+  margin-bottom: 3rem;
+  text-align: center;
 `;
 
 const ServicesGrid = styled.div`
@@ -83,33 +49,38 @@ const ServicesGrid = styled.div`
 
 const ServiceCard = styled(Link)`
   background: white;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  padding: 2rem;
+  border-radius: 15px;
+  overflow: hidden;
   text-decoration: none;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
   }
 `;
 
-const ServiceIcon = styled.div`
-  font-size: 2.5rem;
-  color: #8B7355;
-  margin-bottom: 1rem;
+const ServiceImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 200px;
 `;
 
-const ServiceTitle = styled.h3`
+const ServiceInfo = styled.div`
+  padding: 1.5rem;
+`;
+
+const ServiceTitle = styled.h2`
   font-size: 1.5rem;
   color: #2C3E50;
   margin-bottom: 1rem;
+  line-height: 1.4;
 `;
 
 const ServiceDescription = styled.p`
-  font-size: 1.1rem;
-  color: #666;
+  font-size: 1rem;
+  color: #4A5568;
   line-height: 1.6;
 `;
 
@@ -128,11 +99,19 @@ const WhatsAppButton = styled.a`
   font-size: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 99999;
 
   &:hover {
     transform: scale(1.1);
     background-color: #20ba57;
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
   }
 `;
 
@@ -142,48 +121,42 @@ function ServicesPageContent() {
   return (
     <PageContainer>
       <Header />
-      
-      <HeroSection>
-        <HeroContent>
-          <HeroTitle>
-            {language === 'tr' ? 'Çalışma Alanlarımız' : 'Our Practice Areas'}
-          </HeroTitle>
-          <HeroSubtitle>
-            {language === 'tr' 
-              ? 'Uzman hukuki danışmanlık ve temsil hizmetleri'
-              : 'Expert legal consultancy and representation services'}
-          </HeroSubtitle>
-        </HeroContent>
-      </HeroSection>
-
-      <ServicesSection>
-        <ServicesContainer>
-          <ServicesGrid>
-            {services.map((service) => (
-              <ServiceCard 
-                key={service.slug} 
-                href={`/hizmetlerimiz/${service.slug}`}
-                as={motion.a}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <ServiceIcon>
-                  <i className={`fas fa-${service.icon}`}></i>
-                </ServiceIcon>
+      <MainContent>
+        <PageTitle>
+          {language === 'tr' ? 'Hizmetlerimiz' : 'Our Services'}
+        </PageTitle>
+        <ServicesGrid>
+          {services.map((service) => (
+            <ServiceCard
+              key={service.slug}
+              href={`/hizmetlerimiz/${service.slug}`}
+              as={motion.a}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ServiceImageContainer>
+                <Image
+                  src={service.image}
+                  alt={language === 'tr' ? service.title_tr : service.title_en}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </ServiceImageContainer>
+              <ServiceInfo>
                 <ServiceTitle>
                   {language === 'tr' ? service.title_tr : service.title_en}
                 </ServiceTitle>
                 <ServiceDescription>
                   {language === 'tr' ? service.description_tr : service.description_en}
                 </ServiceDescription>
-              </ServiceCard>
-            ))}
-          </ServicesGrid>
-        </ServicesContainer>
-      </ServicesSection>
+              </ServiceInfo>
+            </ServiceCard>
+          ))}
+        </ServicesGrid>
+      </MainContent>
 
-      <WhatsAppButton 
+      <WhatsAppButton
         href="https://wa.me/905397440887"
         target="_blank"
         rel="noopener noreferrer"

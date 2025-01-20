@@ -17,6 +17,8 @@ const PageContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  color: #2C3E50;
 `;
 
 const ArticleContainer = styled.article`
@@ -24,55 +26,105 @@ const ArticleContainer = styled.article`
   margin: 0 auto;
   padding: 2rem;
   flex-grow: 1;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `;
 
 const HeroImage = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 60vh;
   margin-bottom: 2rem;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
 `;
 
 const ArticleTitle = styled.h1`
-  font-size: 2.5rem;
-  color: #2C3E50;
+  font-size: 3rem;
   margin-bottom: 1rem;
+  color: #2C3E50;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
 `;
 
 const ArticleMeta = styled.div`
   color: #8B7355;
   margin-bottom: 2rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 `;
 
 const ArticleContent = styled.div`
-  color: #333;
+  color: #2C3E50;
   line-height: 1.8;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 
   p {
     margin-bottom: 1.5rem;
+    color: #4A5568;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
   }
 
   h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: #2C3E50;
-    margin: 2rem 0 1rem;
+    margin: 2.5rem 0 1.5rem;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
   }
 
   h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #2C3E50;
-    margin: 1.5rem 0 1rem;
+    margin: 2rem 0 1rem;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
   }
 
   ul, ol {
     margin-bottom: 1.5rem;
     padding-left: 2rem;
+    color: #4A5568;
   }
 
   li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
   }
 
   blockquote {
@@ -81,6 +133,47 @@ const ArticleContent = styled.div`
     margin: 1.5rem 0;
     font-style: italic;
     color: #666;
+  }
+
+  a {
+    color: #8B7355;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #6B5835;
+    }
+  }
+`;
+
+const WhatsAppButton = styled.a`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 99999;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: #20ba57;
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
   }
 `;
 
@@ -108,10 +201,13 @@ function ArticlePageContent({ article }: ArticlePageClientProps) {
           {language === 'tr' ? article.title_tr : article.title_en}
         </ArticleTitle>
         <ArticleMeta>
-          {new Date(article.date).toLocaleDateString(
-            language === 'tr' ? 'tr-TR' : 'en-US',
-            { year: 'numeric', month: 'long', day: 'numeric' }
-          )} | {article.author}
+          <span>
+            {new Date(article.date).toLocaleDateString(
+              language === 'tr' ? 'tr-TR' : 'en-US',
+              { year: 'numeric', month: 'long', day: 'numeric' }
+            )}
+          </span>
+          <span>{article.author}</span>
         </ArticleMeta>
         <ArticleContent 
           dangerouslySetInnerHTML={{ 
@@ -119,6 +215,16 @@ function ArticlePageContent({ article }: ArticlePageClientProps) {
           }} 
         />
       </ArticleContainer>
+
+      <WhatsAppButton
+        href="https://wa.me/905397440887"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp ile iletişime geçin"
+      >
+        <i className="fab fa-whatsapp"></i>
+      </WhatsAppButton>
+
       <Footer />
     </PageContainer>
   );

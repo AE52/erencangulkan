@@ -3,99 +3,138 @@
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Service } from '../data';
 
-// Styled components ve interfaces buraya gelecek...
+interface ServicePageClientProps {
+  service: Service;
+}
+
 const PageContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
+  background-color: white;
+  color: #2C3E50;
 `;
 
-interface HeroSectionProps {
-  $imageUrl: string;
-}
-
-const HeroSection = styled.div<HeroSectionProps>`
-  position: relative;
-  height: 400px;
-  width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-              url(${props => props.$imageUrl});
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
-`;
-
-const HeroContent = styled.div`
+const ServiceContainer = styled.article`
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 2rem;
+  flex-grow: 1;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `;
 
-const HeroTitle = styled.h1`
+const HeroImage = styled.div`
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  margin-bottom: 2rem;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
+`;
+
+const ServiceTitle = styled.h1`
   font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2C3E50;
   line-height: 1.2;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
   }
-`;
 
-const HeroSubtitle = styled.p`
-  font-size: 1.5rem;
-  opacity: 0.9;
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 
-const MainContent = styled.div`
-  max-width: 800px;
-  margin: -100px auto 4rem;
-  padding: 3rem;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 2;
+const ServiceDescription = styled.div`
+  color: #8B7355;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
 `;
 
 const ServiceContent = styled.div`
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-`;
-
-const ServiceTitle = styled.h1`
-  font-size: 2.5rem;
   color: #2C3E50;
-  margin-bottom: 1rem;
-`;
-
-const ServiceDescription = styled.div`
-  font-size: 1.1rem;
   line-height: 1.8;
-  color: #333;
-  margin-bottom: 2rem;
-`;
+  font-size: 1.2rem;
 
-const ServiceDetails = styled.div`
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  p {
+    margin-bottom: 1.5rem;
+    color: #4A5568;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  h2 {
+    font-size: 2rem;
+    color: #2C3E50;
+    margin: 2.5rem 0 1.5rem;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    color: #2C3E50;
+    margin: 2rem 0 1rem;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
+  }
+
+  ul, ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    color: #4A5568;
+  }
+
+  li {
+    margin-bottom: 0.8rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #8B7355;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #666;
+  }
+
+  a {
+    color: #8B7355;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #6B5835;
+    }
+  }
 `;
 
 const WhatsAppButton = styled.a`
@@ -113,17 +152,21 @@ const WhatsAppButton = styled.a`
   font-size: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 99999;
 
   &:hover {
     transform: scale(1.1);
     background-color: #20ba57;
   }
-`;
 
-interface ServicePageClientProps {
-  service: Service;
-}
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
+  }
+`;
 
 function ServicePageContent({ service }: ServicePageClientProps) {
   const { language } = useLanguage();
@@ -131,42 +174,42 @@ function ServicePageContent({ service }: ServicePageClientProps) {
   return (
     <PageContainer>
       <Header />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      <ServiceContainer
+        as={motion.article}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <HeroSection $imageUrl={service.image}>
-          <HeroContent>
-            <HeroTitle>
-              {language === 'tr' ? service.title_tr : service.title_en}
-            </HeroTitle>
-            <HeroSubtitle>
-              {language === 'tr' ? service.description_tr : service.description_en}
-            </HeroSubtitle>
-          </HeroContent>
-        </HeroSection>
-        <MainContent>
-          <ServiceContent>
-            <ServiceTitle>
-              {language === 'tr' ? service.title_tr : service.title_en}
-            </ServiceTitle>
-            <ServiceDescription>
-              {language === 'tr' ? service.description_tr : service.description_en}
-            </ServiceDescription>
-            <ServiceDetails>
-              {language === 'tr' ? service.content_tr : service.content_en}
-            </ServiceDetails>
-          </ServiceContent>
-        </MainContent>
-      </motion.div>
+        <HeroImage>
+          <Image
+            src={service.image}
+            alt={language === 'tr' ? service.title_tr : service.title_en}
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+        </HeroImage>
+        <ServiceTitle>
+          {language === 'tr' ? service.title_tr : service.title_en}
+        </ServiceTitle>
+        <ServiceDescription>
+          {language === 'tr' ? service.description_tr : service.description_en}
+        </ServiceDescription>
+        <ServiceContent 
+          dangerouslySetInnerHTML={{ 
+            __html: language === 'tr' ? service.content_tr : service.content_en 
+          }} 
+        />
+      </ServiceContainer>
+
       <WhatsAppButton
-        href="https://wa.me/905301231234"
+        href="https://wa.me/905397440887"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="WhatsApp ile iletişime geçin"
       >
         <i className="fab fa-whatsapp"></i>
       </WhatsAppButton>
+
       <Footer />
     </PageContainer>
   );
