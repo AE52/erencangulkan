@@ -185,37 +185,6 @@ const AboutImageContainer = styled.div`
   overflow: hidden;
 `;
 
-const WhatsAppButton = styled.a`
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
-  background-color: #25D366;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  z-index: 99999;
-
-  &:hover {
-    transform: scale(1.1);
-    background-color: #20ba57;
-  }
-
-  @media (max-width: 768px) {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    bottom: 20px;
-    right: 20px;
-  }
-`;
-
 const LatestArticlesSection = styled.section`
   padding: 6rem 2rem;
   background: white;
@@ -451,16 +420,6 @@ function HomePageContent() {
           </ArticlesGrid>
         </LatestArticlesSection>
       </motion.div>
-
-      <WhatsAppButton
-        href="https://wa.me/905397440887"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="WhatsApp ile iletişime geçin"
-      >
-        <i className="fab fa-whatsapp"></i>
-      </WhatsAppButton>
-
       <Footer />
     </PageContainer>
   );
