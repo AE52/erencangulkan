@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'tr_TR',
-    url: 'https://www.erencangulkan.com.tr',
+    url: 'https://www.erencangulkan.av.tr',
     siteName: 'Av. Erencan Gülkan | Hukuk Bürosu',
     title: 'Av. Erencan Gülkan | Hukuk Bürosu',
     description: 'İstanbul merkezli hukuk bürosu olarak, aile hukuku, iş hukuku, idare hukuku, bilişim hukuku ve yabancılar hukuku alanlarında hizmet vermekteyiz.',

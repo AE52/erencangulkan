@@ -6,8 +6,13 @@ const nextConfig = {
   },
   images: {
     domains: ['images.unsplash.com'],
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
   reactStrictMode: true,
   poweredByHeader: false,
@@ -19,6 +24,7 @@ const nextConfig = {
     optimizePackageImports: ['styled-components', 'framer-motion'],
     optimizeCss: true,
     craCompat: false,
+    appDir: true,
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev) {

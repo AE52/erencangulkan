@@ -52,24 +52,21 @@ export default function RootLayout({
     <html lang="tr">
       <head>
         <link
-          rel="preconnect"
-          href="https://cdnjs.cloudflare.com"
-          crossOrigin="anonymous"
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         />
         <link
           rel="preconnect"
           href="https://fonts.googleapis.com"
-          crossOrigin="anonymous"
         />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
+          crossOrigin=""
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} style={{ background: '#ffffff' }}>
         <StyledComponentsRegistry>
           <LanguageProvider>
             {children}
@@ -85,8 +82,7 @@ export default function RootLayout({
         </StyledComponentsRegistry>
         <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"
-          strategy="lazyOnload"
-          crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </body>
     </html>

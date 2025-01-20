@@ -1,8 +1,8 @@
 'use client';
 
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
@@ -20,7 +20,7 @@ const PageContainer = styled.div`
 
 const HeroSection = styled.section`
   position: relative;
-  height: 100vh;
+  height: 80vh;
   min-height: 600px;
   display: flex;
   align-items: center;
@@ -30,29 +30,53 @@ const HeroSection = styled.section`
   overflow: hidden;
 `;
 
-const SlideBackground = styled(motion.div)<{ $imageUrl: string }>`
+const LoadingSpinner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #8B7355;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1;
+
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+`;
+
+const SlideBackground = styled.div<{ $imageUrl: string; $isLoading: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.$imageUrl});
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+    url(${props => props.$imageUrl});
   background-size: cover;
   background-position: center;
-  z-index: -1;
+  opacity: ${props => (props.$isLoading ? '0' : '1')};
+  transition: opacity 0.8s ease;
 `;
 
 const HeroContent = styled.div`
+  position: relative;
+  z-index: 2;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
@@ -60,9 +84,10 @@ const HeroTitle = styled.h1`
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   opacity: 0.9;
   margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -71,16 +96,19 @@ const HeroSubtitle = styled.p`
 
 const HeroButton = styled(Link)`
   display: inline-block;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2.5rem;
   background-color: #8B7355;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-weight: 500;
+  font-size: 1.2rem;
   transition: all 0.3s ease;
+  border: 2px solid transparent;
 
   &:hover {
-    background-color: #6B5835;
+    background-color: transparent;
+    border-color: #8B7355;
     transform: translateY(-2px);
   }
 `;
@@ -277,6 +305,39 @@ const slides = [
 function HomePageContent() {
   const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadImage = () => {
+      setIsLoading(true);
+      const imageUrl = slides[currentSlide].imageUrl;
+      
+      if (typeof window !== 'undefined') {
+        const img = new window.Image();
+        img.src = imageUrl;
+        
+        img.onload = () => {
+          if (isMounted) {
+            setIsLoading(false);
+          }
+        };
+        
+        img.onerror = () => {
+          if (isMounted) {
+            setIsLoading(false);
+          }
+        };
+      }
+    };
+
+    loadImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentSlide]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -286,7 +347,6 @@ function HomePageContent() {
     return () => clearInterval(timer);
   }, []);
 
-  // Son 3 makaleyi al ve tarihe göre sırala
   const latestArticles = [...articles]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
@@ -300,30 +360,28 @@ function HomePageContent() {
         transition={{ duration: 0.5 }}
       >
         <HeroSection>
-          <AnimatePresence mode="wait">
-            <SlideBackground
-              key={currentSlide}
-              $imageUrl={slides[currentSlide].imageUrl}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-            />
-          </AnimatePresence>
+          {isLoading && <LoadingSpinner />}
+          <SlideBackground
+            $imageUrl={slides[currentSlide].imageUrl}
+            $isLoading={isLoading}
+          />
           <HeroContent>
-            <HeroTitle>
-              {language === 'tr' 
-                ? slides[currentSlide].title_tr 
-                : slides[currentSlide].title_en}
-            </HeroTitle>
-            <HeroSubtitle>
-              {language === 'tr'
-                ? slides[currentSlide].subtitle_tr
-                : slides[currentSlide].subtitle_en}
-            </HeroSubtitle>
-            <HeroButton href="/iletisim">
-              {language === 'tr' ? 'İletişime Geçin' : 'Contact Us'}
-            </HeroButton>
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <HeroTitle>
+                {language === 'tr' ? slides[currentSlide].title_tr : slides[currentSlide].title_en}
+              </HeroTitle>
+              <HeroSubtitle>
+                {language === 'tr' ? slides[currentSlide].subtitle_tr : slides[currentSlide].subtitle_en}
+              </HeroSubtitle>
+              <HeroButton href="/iletisim">
+                {language === 'tr' ? 'İletişime Geçin' : 'Contact Us'}
+              </HeroButton>
+            </motion.div>
           </HeroContent>
         </HeroSection>
 
@@ -381,7 +439,7 @@ function HomePageContent() {
 
         <LatestArticlesSection>
           <SectionTitle>
-            {language === 'tr' ? 'Son Makalelerimiz' : 'Latest Articles'}
+            {language === 'tr' ? 'Son Makaleler' : 'Latest Articles'}
           </SectionTitle>
           <ArticlesGrid>
             {latestArticles.map((article) => (
@@ -427,8 +485,6 @@ function HomePageContent() {
 
 export default function HomePageClient() {
   return (
-    <Suspense fallback={<div>Yükleniyor...</div>}>
-      <HomePageContent />
-    </Suspense>
+    <HomePageContent />
   );
 } 
