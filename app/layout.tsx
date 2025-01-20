@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '../context/LanguageContext'
@@ -45,6 +46,23 @@ const WhatsAppButton = styled.a`
   }
 `;
 
+const LoadingSpinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #8B7355;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+`;
+
+const LoadingContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -72,17 +90,23 @@ export default function RootLayout({
       </head>
       <body className={inter.className} style={{ background: '#ffffff' }}>
         <StyledComponentsRegistry>
-          <LanguageProvider>
-            {children}
-            <WhatsAppButton
-              href="https://wa.me/905397440887"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp ile iletişime geçin"
-            >
-              <i className="fab fa-whatsapp"></i>
-            </WhatsAppButton>
-          </LanguageProvider>
+          <Suspense fallback={
+            <LoadingContainer>
+              <LoadingSpinner />
+            </LoadingContainer>
+          }>
+            <LanguageProvider>
+              {children}
+              <WhatsAppButton
+                href="https://wa.me/905397440887"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp ile iletişime geçin"
+              >
+                <i className="fab fa-whatsapp"></i>
+              </WhatsAppButton>
+            </LanguageProvider>
+          </Suspense>
         </StyledComponentsRegistry>
         <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"

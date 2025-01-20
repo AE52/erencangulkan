@@ -80,6 +80,14 @@ const nextConfig = {
       },
     ];
   },
+  modularizeImports: {
+    'styled-components': {
+      transform: 'styled-components/{{member}}',
+    },
+    'framer-motion': {
+      transform: 'framer-motion/{{member}}',
+    },
+  },
 }
 
 module.exports = nextConfig; 
