@@ -319,16 +319,18 @@ function HomePageContent() {
       setIsLoading(true);
       const imageUrl = slides[currentSlide].imageUrl;
       
-      const img = new Image();
-      img.src = imageUrl;
-      
-      img.onload = () => {
-        setIsLoading(false);
-      };
-      
-      img.onerror = () => {
-        setIsLoading(false);
-      };
+      if (typeof window !== 'undefined') {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        
+        img.onload = () => {
+          setIsLoading(false);
+        };
+        
+        img.onerror = () => {
+          setIsLoading(false);
+        };
+      }
     };
 
     loadImage();
